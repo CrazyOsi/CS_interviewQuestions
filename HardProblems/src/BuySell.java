@@ -5,7 +5,8 @@ public class BuySell {
 		/*
 		 * A[i] depicts the share's value on day i.
 		 * we have a share that changes value each day.
-		 * with the power of hindsight, when was best day to buy/sell?
+		 * with the power of hindsight, what's the most amount
+		 * of money we could've made?
 		 */
 	
 		int[] shares = {7,5,8,4,2,1,7};
@@ -15,6 +16,7 @@ public class BuySell {
 	
 	public static int oneTransaction_BF(int[] A) {
 		/*
+		 * Start Easy; One Transaction only, Brute Force
 		 * brute force; just try all combinations, take max of them'
 		 * -> Math.max(∀(i,j)), for which: i ≤ j ≤ n
 		 * explain how this can be optimized to ~(n*n)/2 - n
@@ -36,5 +38,10 @@ public class BuySell {
 		
 		return max;
 	}
+	
+	public static int oneTransaction_Graph(int[] A) {
+		return 0;
+	}
+	
 
 }
