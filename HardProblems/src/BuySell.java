@@ -9,8 +9,8 @@ public class BuySell {
 		 * of money we could've made?
 		 */
 	
-		int[] shares = {7,5,8,4,2,1,7};
-		int result = oneTransaction_BF(shares);
+		int[] shares = {2,6,8,7,8,7,9,4,1,2,4,5,8,9};
+		int result = oneTransaction_OnePass(shares);
 		System.out.println(result);
 	}
 	
@@ -29,19 +29,59 @@ public class BuySell {
 		
 		for(int i = 0; i < (n-1); i++) {
 			for(int j = (i+1); j < n; j++) {
-				int temp = A[j] - A[i];
-				if(temp > max) {
-					max = temp;
-				}
+				max = Math.max(max, A[j] - A[i]);
 			}
 		}
 		
 		return max;
 	}
-	
-	public static int oneTransaction_Graph(int[] A) {
-		return 0;
+	public static int oneTransaction_OnePassArray(int[] A) {
+		/*
+		 * draw the change of the stock as a graph
+		 * realize that if we know the lowestThusFar, then
+		 * the CONSEQUENT highest point, we get a 
+		 * possible highest value candidate. make an Array from right
+		 * where A[i] is highest possible sell-value at that day;
+		 */
+		int n = A.length;
+		int[] helperArray = new int[n];
+		
+		helperArray[n-1] = A[n-1];
+		
+		for(int i = n-2; i > 0; i--) {
+			helperArray[i] = Math.max(A[i], helperArray[i+1]);
+		}
+		
+		int max = 0;
+		
+		for(int i = 0; i < n; i++) {
+			max = Math.max(helperArray[i] - A[i], max);
+		}
+		
+		return max;
+	}
+	public static int oneTransaction_OnePass(int[] A) {
+		/*
+		 * like upper solution but instead of array we can
+		 * think with 2 pointers
+		 */
+		
+		int n = A.length;
+		int bestValueThusFar = 0;
+		int lowestThusFar = Integer.MAX_VALUE;
+		
+		for(int i = 0; i < n; i++) {
+			if(A[i] < lowestThusFar) {
+				lowestThusFar = A[i];
+			}
+			
+			if(A[i] - lowestThusFar > bestValueThusFar) {
+				bestValueThusFar = A[i] - lowestThusFar;
+			}
+		}
+		
+		return bestValueThusFar;
 	}
 	
-
+	
 }
